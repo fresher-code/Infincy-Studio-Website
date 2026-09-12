@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Infincy Studio Website"
+description = "A responsive marketing website for Infincy, a software engineering studio building full-stack products, backend systems, cloud infrastructure, and production AI features for businesses."
+version = "1.0.0"
+id = "artifacts/infincy-site"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25450
+
+[services.development]
+run = "pnpm --filter @workspace/infincy-site run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/infincy-site", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/infincy-site/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25450"
+BASE_PATH = "/"
